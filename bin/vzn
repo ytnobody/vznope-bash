@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export VZNBIN=$(dirname $0)
+export VZNLIB=$VZNBIN/../lib
+
+. $VZNLIB/vznope.sh
+
+subcmd=$1; shift
+if [ -z "$subcmd" ]; then
+    subcmd=help
+fi
+
+eval "vznope-$subcmd" $*

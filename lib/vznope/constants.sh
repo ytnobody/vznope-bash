@@ -1,0 +1,39 @@
+if [ -z "$VZN_VZDIR" ] ; then
+    export VZN_VZDIR=/var/lib/vz
+fi
+
+if [ -z "$VZN_IMAGES_URL" ] ; then
+    export VZN_IMAGES_URL=http://download.openvz.org/template/precreated/
+fi
+
+if [ -z "$VZN_IMAGE_CACHEDIR" ] ; then
+    export VZN_IMAGES_CACHEDIR=$VZN_VZDIR/template/cache
+fi
+
+if [ -z "$VZN_WORKDIR" ] ; then
+    export VZN_WORKDIR=/var/share/vzn
+fi
+
+if [ -z "$VZN_CT_PRIVDIR" ] ; then
+    export VZN_CT_PRIVDIR=$VZN_VZDIR/private
+fi
+
+if [ -z "$VZN_CT_CONFDIR" ] ; then
+    export VZN_CT_CONFDIR=/etc/vz/conf
+fi
+
+if [ -z "$VZN_CT_METADIR" ] ; then
+    export VZN_CT_METADIR=$VZN_WORKDIR/meta
+fi
+
+if [ -z "$VZN_CT_NETWORK" ] ; then
+    export VZN_CT_NETWORK=169.254.32.0/24
+fi
+
+if [ -z "$VZN_CT_GATEWAY" ] ; then
+    export VZN_CT_GATEWAY=169.254.32.1
+fi
+
+if [ -z "$VZN_CT_NAMESERVER" ] ; then
+    export VZN_CT_NAMESERVER=8.8.8.8
+fi
