@@ -1,6 +1,8 @@
 . $VZNLIB/getopt_smart.sh
+. $VZNLIB/vznope/vznfile.sh
 . $VZNLIB/vznope/constants.sh
 . $VZNLIB/vznope/image.sh
+. $VZNLIB/vznope/container.sh
 
 function vznope-help () {
 cat <<EOF

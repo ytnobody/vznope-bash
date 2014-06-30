@@ -27,7 +27,7 @@ if [ -z "$VZN_CT_METADIR" ] ; then
 fi
 
 if [ -z "$VZN_CT_NETWORK" ] ; then
-    export VZN_CT_NETWORK=169.254.32.0/24
+    export VZN_CT_NETWORK=169.254.32.0/16
 fi
 
 if [ -z "$VZN_CT_GATEWAY" ] ; then
@@ -36,4 +36,8 @@ fi
 
 if [ -z "$VZN_CT_NAMESERVER" ] ; then
     export VZN_CT_NAMESERVER=8.8.8.8
+fi
+
+if [ -z "$VZN_WORDS_DICT" ] ; then
+    export VZN_WORDS_DICT=/usr/share/dict/words
 fi

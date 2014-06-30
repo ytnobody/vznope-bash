@@ -1,5 +1,10 @@
 function vznope-images-available () {
-    curl -s $VZN_IMAGES_URL | 
+    subtype=$1 ; shift
+    url=$VZN_IMAGES_URL
+    if [ ! -z "$subtype" ] ; then
+        url=$VZN_IMAGES_URL$subtype/;
+    fi
+    curl -sL $url | 
         grep 'href=' | 
         awk '
             BEGIN {
@@ -24,27 +29,55 @@ function vznope-images-available () {
                 version = part[2];
                 arch    = part[3];
                 tag     = part[4];
+                if (! tag) {
+                    tag = "default";
+                }
 
                 printf(format, distro"@"version, arch, tag, size);
             }
         ' 
 }
 
-function fetch-image () {
+function vznope-image () {
     getopt $*
     distver=$OPT_0
     arch=$OPT_arch
     tag=$OPT_tag
+    subtype=$OPT_subtype
+    url=$VZN_IMAGES_URL
+    if [ -z "$arch" ] ; then
+        arch=$(uname -i)
+    fi
+    if [ -z "$tag" ] ; then
+        tag="default"
+    fi
     if [[ "$distver" =~ @ ]] ; then
         dist=$(echo $distver | sed 's/\@.*//')
         version=$(echo $distver | sed 's/.*\@//')
     else
         dist=$distver
     fi
-    vznope-images-available | sed '1d' |
-        awk '$1 ~ /'$dist'/ && $1 ~ /'$version'/'
+    vznope-images-available $subtype | 
+        sed '1d' |
+        awk '$1 ~ /'$dist'/ && $1 ~ /'$version'/ && $2 == "'$arch'" && $3 == "'$tag'"' |
+        sort -nr |
+        head -n 1 | 
+        awk '
+            {
+                baseurl = "'$url'";
+                distver = $1;
+                arch = $2;
+                tag = $3;
+                split(distver, distpart, "@");
+                dist = distpart[1];
+                version = distpart[2];
+                if (tag == "default") {
+                    printf "%s-%s-%s\n", dist, version, arch;
+                }
+                else {
+                    printf "%s-%s-%s-%s\n", dist, version, arch, tag;
+                }
+            }
+        '
 }
 
-function vznope-image () {
-    fetch-image $*
-}
