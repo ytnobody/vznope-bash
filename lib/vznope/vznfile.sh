@@ -32,7 +32,19 @@ function vznfile () {
 
 function metadir () {
     ctid=$1 ; shift
-    echo $VZN_CT_METADIR/$ctid
+    if [ -d $VZN_CT_METADIR/$ctid ] ; then
+        echo $VZN_CT_METADIR/$ctid
+    else 
+        ctname=$ctid;
+        ctid=$(get-ctid $ctname)
+        if [ -z "$ctid" ] ; then
+            echo "not such container (input=$ctid)" > /dev/stderr
+            exit 1
+        fi
+        if [ ! -d $VZN_CT_METADIR/$ctid ] ; then
+            echo "not such container (input=$ctid)" > /dev/stderr
+            exit 1
+        fi
+        echo $VZN_CT_METADIR/$ctid
+    fi
 }
-
-

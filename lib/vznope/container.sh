@@ -25,9 +25,11 @@ function vznope-create () {
 
 function vznope-destroy () {
     ctid=$1 ; shift
+
     metadir=$(metadir $ctid)
-    vzctl destroy $ctid &&
-      rm -fr $metadir
+echo $ctid' --- '$metadir
+#    vzctl destroy $ctid &&
+#      rm -fr $metadir
 }
 
 function vznope-dummy-name () {
@@ -99,4 +101,18 @@ function ipaddr_create () {
             }
         '
     fi
+}
+
+function get-ctid () {
+    ctname=$1 ; shift
+    grep -e '^NAME="'$ctname'"$' $VZN_CT_CONFDIR/*.conf | 
+    awk '
+        BEGIN{FS=":";}
+        {
+            id=$1;
+            sub("'$VZN_CT_CONFDIR'/","",id);
+            sub(".conf","",id);
+            print(id);
+        }
+    '
 }
