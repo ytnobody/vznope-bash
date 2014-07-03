@@ -46,3 +46,26 @@ function vznope-destroy () {
       rm -fr $metadir
 }
 
+function vznope-list () {
+    conf_list=$(ls $VZN_CT_CONFDIR/*.conf | sed '/\/0.conf$/d')
+
+    for conf in $conf_list ; do
+        CTID=$(echo $conf | awk '{
+            sub("'$VZN_CT_CONFDIR'/", ""); 
+            sub(".conf", ""); 
+            print($0);
+        }');
+        cat <<EOF;
+  CTID                  NAME      IP_ADDRESS    CPUUNITS        RAM        SWAP        DISK
+--------------------------------------------------------------------------------------------
+EOF
+        cat $conf | awk '
+            BEGIN { FS = "="; }
+            $0 !~ /^#/ && $0 !~ /^$/ { gsub("\"", ""); ct[$1] = $2;}
+            END {
+                format = "% 6s  % 20s\n"; 
+                printf( $format, "'$CTID'", ct["NAME"], ct["IP_ADDRESS"], ct["CPUUNITS"], ct["PHYSPAGES"], ct["SWAPPAGES"], ct["DISKSPACE"]);
+            }
+        '
+    done
+}
