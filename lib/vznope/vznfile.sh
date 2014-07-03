@@ -35,14 +35,14 @@ function metadir () {
     if [ -d $VZN_CT_METADIR/$ctid ] ; then
         echo $VZN_CT_METADIR/$ctid
     else 
-        ctname=$ctid;
-        ctid=$(get-ctid $ctname)
-        if [ -z "$ctid" ] ; then
-            echo "not such container (input=$ctid)" > /dev/stderr
-            exit 1
+        if [[ "$ctid" =~ ^[0-9]+$ ]] ; then
+            echo '' > /dev/stderr
+        else
+            ctname=$ctid;
+            ctid=$(get-ctid $ctname)
         fi
-        if [ ! -d $VZN_CT_METADIR/$ctid ] ; then
-            echo "not such container (input=$ctid)" > /dev/stderr
+        if [ -z "$ctid" ] ; then
+            echo "not such container (INPUT=$ctid)" > /dev/stderr
             exit 1
         fi
         echo $VZN_CT_METADIR/$ctid

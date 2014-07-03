@@ -1,11 +1,25 @@
 function vznope-create () {
-    ctid=$1 ; shift
+    ctid=$1
+    if [ -z "$ctid" ] ; then
+        vznope-help
+        exit
+    fi
+    shift
+
     image=$(vznope-image $*)
+
     getopt $*
+
     distver=$OPT_0
     ip=$OPT_ip
     name=$OPT_name
     arch=$OPT_arch
+
+    if [ -z "$distver" ] ; then
+        vznope-help
+        exit
+    fi
+
 
     if [ -z "$ip" ] ; then
         ip=$(vznope-default-ip $ctid)
@@ -27,9 +41,8 @@ function vznope-destroy () {
     ctid=$1 ; shift
 
     metadir=$(metadir $ctid)
-echo $ctid' --- '$metadir
-#    vzctl destroy $ctid &&
-#      rm -fr $metadir
+    vzctl destroy $ctid &&
+      rm -fr $metadir
 }
 
 function vznope-dummy-name () {
@@ -60,43 +73,34 @@ function ipaddr_create () {
     number=$1 ; shift
     offset=$(echo $network | sed 's/\/.*$//')
     mask=$(echo $network | sed 's/^.*\///')
-    offset_deg=$(echo $offset | awk '
-        BEGIN {FS = ".";}
-        {
-            seg1 = $1 * 16581375;
-            seg2 = $2 * 65025;
-            seg3 = $3 * 255;
-            seg4 = $4;
-            offset_deg = seg1 + seg2 + seg3 + seg4;
-            print offset_deg;
-        }
-    ')
-    mask_range=$(echo $mask | awk '
-        {
-            range_bit = 32 - $1;
-            range_num = 2 ** range_bit;
-            print range_num;
-        }
-    ')
+    mask_pwr=$(( 32 - $mask ))
+    mask_range=$(( 2 ** $mask_pwr ))
+
     if [ $number -gt $mask_range ] ; then
         echo 'too large number' > /dev/stderr
         exit 1
     else 
-        answer_deg=$(expr $offset_deg + $number)
-        echo $answer_deg | awk '
+        echo $number | awk '
+            BEGIN {
+                split("'$offset'", ipseg, ".");
+            }
             {
-                answer_deg1 = $1;
-                seg1 = int(answer_deg1 / 16581375);
+                number = $1;
+                seg1 = int(number / 16581375);
 
-                answer_deg2 = answer_deg1 - seg1 * 16581375;
-                seg2 = int(answer_deg2 / 65025);
+                number = number - seg1 * 16581375;
+                seg2 = int(number / 65025);
 
-                answer_deg3 = answer_deg2 - seg2 * 65025;
-                seg3 = int(answer_deg3 / 255);
+                number = number - seg2 * 65025;
+                seg3 = int(number / 255);
 
-                answer_deg4 = answer_deg3 - seg3 * 255;
-                seg4 = answer_deg4;
+                number = number - seg3 * 255;
+                seg4 = number;
 
+                seg1 += ipseg[1];
+                seg2 += ipseg[2];
+                seg3 += ipseg[3];
+                seg4 += ipseg[4];
                 print seg1"."seg2"."seg3"."seg4;
             }
         '
