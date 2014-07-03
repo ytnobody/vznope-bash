@@ -39,7 +39,7 @@ function metadir () {
             echo '' > /dev/stderr
         else
             ctname=$ctid;
-            ctid=$(get-ctid $ctname)
+            ctid=$(vzutil-get-ctid $ctname)
         fi
         if [ -z "$ctid" ] ; then
             echo "not such container (INPUT=$ctid)" > /dev/stderr

@@ -1,33 +1,9 @@
 . $VZNLIB/getopt_smart.sh
+. $VZNLIB/vznope/util.sh
+. $VZNLIB/vznope/help.sh
 . $VZNLIB/vznope/vznfile.sh
 . $VZNLIB/vznope/constants.sh
 . $VZNLIB/vznope/image.sh
 . $VZNLIB/vznope/container.sh
 
-function vznope-help () {
-cat <<EOF
-
-  usage: 
-    vzn [subcommand] [options]
-
-  subcommands:
-    build
-    commit
-    commit-log
-    create
-    destroy
-    enter
-    exec
-    get-image
-    help
-    images
-    images-available
-    list
-    set
-    start
-    stop
-    vznfile
-
-EOF
-}
 
