@@ -84,3 +84,16 @@ cat <<EOF
 EOF
 exit
 }
+
+function vznope-enter-help () {
+cat <<EOF
+
+  # vzn enter
+
+  Enter to specified container
+
+  usage:
+    vzn enter [CTID or NAME]
+EOF
+exit
+}

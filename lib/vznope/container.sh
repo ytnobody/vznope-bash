@@ -42,6 +42,7 @@ function vznope-destroy () {
     fi
 
     metadir=$(metadir $ctid)
+    vznope-stop $ctid &&
     vzctl destroy $ctid &&
       rm -fr $metadir
 }
@@ -103,3 +104,12 @@ function vznope-stop () {
         vznfile-append $ctid stop &&
         vznfile-commit $ctid 'stop'
 }
+
+function vznope-enter () {
+    ctid=$1
+    if [ -z "$ctid" ] ; then
+        vznope-enter-help
+    fi
+    vzctl enter $ctid
+}
+
