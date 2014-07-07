@@ -16,11 +16,15 @@ function vznfile-init () {
 
 function vznfile-commit () {
     ctid=$1 ; shift
-    message=$1 ; shift
     metadir=$(metadir $ctid)
     cd $metadir
     git add vznfile
-    git commit -m $message
+    git commit -m "$*"
+}
+
+function vznfile-put {
+    vznfile-append $* &&
+    vznfile-commit $*
 }
 
 function vznfile () {

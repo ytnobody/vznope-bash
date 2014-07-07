@@ -51,8 +51,8 @@ function vznope-list () {
     conf_list=$(ls $VZN_CT_CONFDIR/*.conf | sed '/\/0.conf$/d')
 
     cat <<EOF;
-  CTID                  NAME       IP_ADDRESS    CPUUNITS         RAM        SWAP        DISK
----------------------------------------------------------------------------------------------
+  CTID                  NAME    STAT         IP-Addr.    CPUut.         RAM        SWAP        DISK
+-----------------------------------------------------------------------------------------------------
 EOF
 
     for conf in $conf_list ; do
@@ -61,12 +61,13 @@ EOF
             sub(".conf", ""); 
             print($0);
         }');
+        vz_stat=$(vznope-status $CTID);
         cat $conf | awk '
             BEGIN { FS = "="; }
             $0 !~ /^#/ && $0 !~ /^$/ { gsub("\"", ""); ct[$1] = $2;}
             END {
-                format = "% 6s  % 20s  % 15s  % 10s  % 10s  % 10s  % 10s\n"; 
-                printf(format, "'$CTID'", ct["NAME"], ct["IP_ADDRESS"], ct["CPUUNITS"], ct["PHYSPAGES"], ct["SWAPPAGES"], ct["DISKSPACE"]);
+                format = "% 6s  % 20s  % 6s  % 15s  % 8s  % 10s  % 10s  % 10s\n"; 
+                printf(format, "'$CTID'", ct["NAME"], "'$vz_stat'", ct["IP_ADDRESS"], ct["CPUUNITS"], ct["PHYSPAGES"], ct["SWAPPAGES"], ct["DISKSPACE"]);
             }
         '
     done
@@ -82,6 +83,16 @@ function vznope-getinfo () {
     fi
 }
 
+function vznope-status () {
+    ctid=$(vzutil-get-ctid $1) ; shift
+    vzroot=$(vznope-getinfo $ctid VE_ROOT | sed "s/\$VEID/$ctid/g")
+    if [ $(ls $vzroot | wc -l) -gt 0 ] ; then
+        echo 'ON'
+    else
+        echo 'off'
+    fi
+}
+
 function vznope-start () {
     ctid=$1
     if [ -z "$ctid" ] ; then
@@ -92,8 +103,7 @@ function vznope-start () {
         echo "ping check to $ipaddr" &&
         ping -w 60 -c 1 $ipaddr > /dev/null 2>&1 &&
         echo "network ok" &&
-        vznfile-append $ctid start &&
-        vznfile-commit $ctid 'start'
+        vznfile-put $ctid start
 }
 
 function vznope-stop () {
@@ -102,8 +112,7 @@ function vznope-stop () {
         vznope-stop-help
     fi
     vzctl stop $ctid &&
-        vznfile-append $ctid stop &&
-        vznfile-commit $ctid 'stop'
+        vznfile-put $ctid stop
 }
 
 function vznope-enter () {
@@ -120,8 +129,7 @@ function vznope-exec () {
         vznope-exec-help
     fi
     vzctl exec $ctid $* && 
-        vznfile-append $ctid "exec $*" &&
-        vznfile-commit $ctid "exec $*" 
+        vznfile-put $ctid "exec $*"
 }
 
 function vznope-set () {
@@ -130,6 +138,5 @@ function vznope-set () {
         vznope-set-help
     fi
     vzctl set $ctid $* --save &&
-        vznfile-append $ctid "set $*" &&
-        vznfile-commit $ctid "set $*" 
+        vznfile-put $ctid "set $*"
 }
