@@ -6,8 +6,6 @@ cat <<EOF
 
   subcommands:
     build
-    commit
-    commit-log
     create
     destroy
     enter
@@ -106,7 +104,88 @@ cat <<EOF
   Exec command in specified container. Then append as history into vznfile.
 
   usage:
-    vzn enter [CTID or NAME] [COMMAND AND OPTIONS]
+    vzn exec [CTID or NAME] [COMMAND AND OPTIONS]
 EOF
 exit
 }
+
+function vznope-exec-as-help () {
+cat <<EOF
+
+  # vzn exec-as
+
+  Exec command as specified user in specified container. Then append as history into vznfile.
+
+  usage:
+    vzn exec-as [CTID or NAME] [USER] [COMMAND AND OPTIONS]
+EOF
+exit
+}
+
+function vznope-set-help () {
+cat <<EOF
+
+  # vzn set
+
+  Set specified beancounter parameters and save these
+
+  usage:
+    vzn set [CTID or NAME] ([options])
+
+    options:
+    [--force] [--setmode restart|ignore]
+       [--ram <bytes>[KMG]] [--swap <bytes>[KMG]]
+       [--ipadd <addr>] [--ipdel <addr>|all] [--hostname <name>]
+       [--nameserver <addr>] [--searchdomain <name>]
+       [--onboot yes|no] [--bootorder <N>]
+       [--userpasswd <user>:<passwd>]
+       [--cpuunits <N>] [--cpulimit <N>] [--cpus <N>] [--cpumask <cpus>]
+       [--diskspace <soft>[:<hard>]] [--diskinodes <soft>[:<hard>]]
+       [--quotatime <N>] [--quotaugidlimit <N>] [--mount_opts <opt>[,<opt>...]]
+       [--capability <name>:on|off ...]
+       [--devices b|c:major:minor|all:r|w|rw]
+       [--devnodes device:r|w|rw|none]
+       [--netif_add <ifname[,mac,host_ifname,host_mac,bridge]]>]
+       [--netif_del <ifname>]
+       [--applyconfig <name>] [--applyconfig_map <name>]
+       [--features <name:on|off>] [--name <vename>]
+       [--ioprio <N>] [--iolimit <N>] --iopslimit <N>
+       [--pci_add [<domain>:]<bus>:<slot>.<func>] [--pci_del <d:b:s.f>]
+       [--iptables <name>] [--disabled <yes|no>]
+       [--stop-timeout <seconds>
+       [UBC parameters]
+    
+    UBC parameters (N - items, P - pages, B - bytes):
+    Two numbers divided by colon means barrier:limit.
+    In case the limit is not given it is set to the same value as the barrier.
+       --numproc N[:N]	--numtcpsock N[:N]	--numothersock N[:N]
+       --vmguarpages P[:P]	--kmemsize B[:B]	--tcpsndbuf B[:B]
+       --tcprcvbuf B[:B]	--othersockbuf B[:B]	--dgramrcvbuf B[:B]
+       --oomguarpages P[:P]	--lockedpages P[:P]	--privvmpages P[:P]
+       --shmpages P[:P]	--numfile N[:N]		--numflock N[:N]
+       --numpty N[:N]	--numsiginfo N[:N]	--dcachesize N[:N]
+       --numiptent N[:N]	--physpages P[:P]	--avnumproc N[:N]
+       --swappages P[:P]
+    
+
+
+EOF
+exit
+}
+
+function vznope-vznfile-help () {
+cat <<EOF
+
+  # vzn vznfile
+
+  Dump content of vznfile for specified container
+
+  usage:
+    vzn vznfile [CTID or NAME]
+
+
+EOF
+exit
+}
+
+

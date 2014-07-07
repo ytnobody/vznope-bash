@@ -34,6 +34,14 @@ function vznfile () {
     echo $metadir/vznfile
 }
 
+function vznope-vznfile () {
+    ctid=$1 ; shift
+    if [ -z "$ctid" ] ; then
+        vznope-vznfile-help
+    fi
+    cat $(vznfile $ctid)
+}
+
 function metadir () {
     ctid=$1 ; shift
     if [ -d $VZN_CT_METADIR/$ctid ] ; then
