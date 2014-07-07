@@ -6,6 +6,7 @@
 . $VZNLIB/vznope/image.sh
 . $VZNLIB/vznope/container.sh
 . $VZNLIB/vznope/net.sh
+. $VZNLIB/vznope/builder.sh
 
 function vznope-init () {
     vznet-init

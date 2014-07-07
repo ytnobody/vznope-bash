@@ -56,3 +56,16 @@ function metadir () {
         echo $VZN_CT_METADIR/$ctid
     fi
 }
+
+function vznfile-commit-history () {
+    ctid=$1 ; shift
+    step=$1 ; shift
+    metadir=$(metadir $ctid)
+    if [ ! -d $metadir ] ; then
+        echo '0000000|<none>|<none>'
+    else 
+        cd $metadir &&
+            git log --format="%h|%an|%s" --date-order --reverse | 
+            sed -n $step'p'
+    fi
+}
