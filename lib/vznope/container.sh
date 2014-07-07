@@ -119,7 +119,16 @@ function vznope-exec () {
         vznope-exec-help
     fi
     vzctl exec $ctid $* && 
-        vznfile-append $ctid $* &&
-        vznfile-commit $ctid "$*" 
+        vznfile-append $ctid "exec $*" &&
+        vznfile-commit $ctid "exec $*" 
 }
 
+function vznope-set () {
+    ctid=$(vzutil-get-ctid $1) ; shift
+    if [ -z "$ctid" ] ; then
+        vznope-set-help
+    fi
+    vzctl set $ctid $* --save &&
+        vznfile-append $ctid "set $*" &&
+        vznfile-commit $ctid "set $*" 
+}
