@@ -132,6 +132,16 @@ function vznope-exec () {
         vznfile-put $ctid "exec $*"
 }
 
+function vznope-exec-as () {
+    ctid=$(vzutil-get-ctid $1) ; shift
+    username=$1 ; shift
+    if [ -z "$ctid" ] || [ -z "$username" ] || [ -z "$*" ] ; then
+        vznope-exec-as-help
+    fi
+    vzctl exec $ctid su - $username -c "$*" && 
+        vznfile-put $ctid "exec-as $username $*"
+}
+
 function vznope-set () {
     ctid=$(vzutil-get-ctid $1) ; shift
     if [ -z "$ctid" ] ; then
