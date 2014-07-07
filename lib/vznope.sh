@@ -5,8 +5,8 @@
 . $VZNLIB/vznope/constants.sh
 . $VZNLIB/vznope/image.sh
 . $VZNLIB/vznope/container.sh
+. $VZNLIB/vznope/net.sh
 
 function vznope-init () {
-    ifconfig $VZN_NETIF $VZN_CT_GATEWAY/$VZN_CT_NETMASK
-    
+    vznet-init
 }
