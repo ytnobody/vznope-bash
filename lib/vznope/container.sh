@@ -56,15 +56,15 @@ function vznope-list () {
             print($0);
         }');
         cat <<EOF;
-  CTID                  NAME      IP_ADDRESS    CPUUNITS        RAM        SWAP        DISK
---------------------------------------------------------------------------------------------
+  CTID                  NAME       IP_ADDRESS    CPUUNITS         RAM        SWAP        DISK
+---------------------------------------------------------------------------------------------
 EOF
         cat $conf | awk '
             BEGIN { FS = "="; }
             $0 !~ /^#/ && $0 !~ /^$/ { gsub("\"", ""); ct[$1] = $2;}
             END {
-                format = "% 6s  % 20s\n"; 
-                printf( $format, "'$CTID'", ct["NAME"], ct["IP_ADDRESS"], ct["CPUUNITS"], ct["PHYSPAGES"], ct["SWAPPAGES"], ct["DISKSPACE"]);
+                format = "% 6s  % 20s  % 15s  % 10s  % 10s  % 10s  % 10s\n"; 
+                printf(format, "'$CTID'", ct["NAME"], ct["IP_ADDRESS"], ct["CPUUNITS"], ct["PHYSPAGES"], ct["SWAPPAGES"], ct["DISKSPACE"]);
             }
         '
     done
