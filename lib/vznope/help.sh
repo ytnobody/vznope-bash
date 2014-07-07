@@ -97,3 +97,16 @@ cat <<EOF
 EOF
 exit
 }
+
+function vznope-exec-help () {
+cat <<EOF
+
+  # vzn exec
+
+  Exec command in specified container. Then append as history into vznfile.
+
+  usage:
+    vzn enter [CTID or NAME] [COMMAND AND OPTIONS]
+EOF
+exit
+}

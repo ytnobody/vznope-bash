@@ -100,7 +100,7 @@ function vznope-stop () {
     if [ -z "$ctid" ] ; then
         vznope-stop-help
     fi
-    vzctl stop $ctid
+    vzctl stop $ctid &&
         vznfile-append $ctid stop &&
         vznfile-commit $ctid 'stop'
 }
@@ -111,5 +111,15 @@ function vznope-enter () {
         vznope-enter-help
     fi
     vzctl enter $ctid
+}
+
+function vznope-exec () {
+    ctid=$(vzutil-get-ctid $1) ; shift
+    if [ -z "$ctid" ] || [ -z "$*" ] ; then
+        vznope-exec-help
+    fi
+    vzctl exec $ctid $* && 
+        vznfile-append $ctid $* &&
+        vznfile-commit $ctid "$*" 
 }
 
