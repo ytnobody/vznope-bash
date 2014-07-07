@@ -50,16 +50,17 @@ function vznope-destroy () {
 function vznope-list () {
     conf_list=$(ls $VZN_CT_CONFDIR/*.conf | sed '/\/0.conf$/d')
 
+    cat <<EOF;
+  CTID                  NAME       IP_ADDRESS    CPUUNITS         RAM        SWAP        DISK
+---------------------------------------------------------------------------------------------
+EOF
+
     for conf in $conf_list ; do
         CTID=$(echo $conf | awk '{
             sub("'$VZN_CT_CONFDIR'/", ""); 
             sub(".conf", ""); 
             print($0);
         }');
-        cat <<EOF;
-  CTID                  NAME       IP_ADDRESS    CPUUNITS         RAM        SWAP        DISK
----------------------------------------------------------------------------------------------
-EOF
         cat $conf | awk '
             BEGIN { FS = "="; }
             $0 !~ /^#/ && $0 !~ /^$/ { gsub("\"", ""); ct[$1] = $2;}
