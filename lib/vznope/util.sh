@@ -62,15 +62,19 @@ function ipaddr_create () {
 
 function vzutil-get-ctid () {
     ctname=$1 ; shift
-    grep -e '^NAME="'$ctname'"$' $VZN_CT_CONFDIR/*.conf | 
-    awk '
-        BEGIN{FS=":";}
-        {
-            id=$1;
-            sub("'$VZN_CT_CONFDIR'/","",id);
-            sub(".conf","",id);
-            print(id);
-        }
-    '
+    if [[ "$ctname" =~ ^[0-9]+$ ]] ; then
+        echo $ctname;
+    else 
+        grep -e '^NAME="'$ctname'"$' $VZN_CT_CONFDIR/*.conf | 
+        awk '
+            BEGIN{FS=":";}
+            {
+                id=$1;
+                sub("'$VZN_CT_CONFDIR'/","",id);
+                sub(".conf","",id);
+                print(id);
+            }
+        '
+    fi
 }
 

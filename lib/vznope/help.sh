@@ -58,3 +58,29 @@ cat <<EOF
 EOF
 exit
 }
+
+function vznope-start-help () {
+cat <<EOF
+
+  # vzn start
+
+  Start a specified container 
+
+  usage:
+    vzn start [CTID or NAME]
+EOF
+exit
+}
+
+function vznope-stop-help () {
+cat <<EOF
+
+  # vzn stop
+
+  Stop a specified container 
+
+  usage:
+    vzn stop [CTID or NAME]
+EOF
+exit
+}

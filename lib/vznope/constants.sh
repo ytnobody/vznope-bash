@@ -26,8 +26,12 @@ if [ -z "$VZN_CT_METADIR" ] ; then
     export VZN_CT_METADIR=$VZN_WORKDIR/meta
 fi
 
+if [ -z "$VZN_CT_NETMASK" ] ; then
+    export VZN_CT_NETMASK=16
+fi
+
 if [ -z "$VZN_CT_NETWORK" ] ; then
-    export VZN_CT_NETWORK=169.254.32.0/16
+    export VZN_CT_NETWORK=169.254.32.0/$VZN_CT_NETMASK
 fi
 
 if [ -z "$VZN_CT_GATEWAY" ] ; then
@@ -36,6 +40,10 @@ fi
 
 if [ -z "$VZN_CT_NAMESERVER" ] ; then
     export VZN_CT_NAMESERVER=8.8.8.8
+fi
+
+if [ -z "$VZN_NETIF" ] ; then
+    export VZN_NETIF=eth0:vzn
 fi
 
 if [ -z "$VZN_WORDS_DICT" ] ; then

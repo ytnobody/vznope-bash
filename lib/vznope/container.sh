@@ -69,3 +69,37 @@ EOF
         '
     done
 }
+
+function vznope-getinfo () {
+    ctid=$(vzutil-get-ctid $1) ; shift
+    key=$1
+    if [ -z "$key" ] ; then 
+        cat $VZN_CT_CONFDIR/$ctid.conf | sed '/^#/d; /^$/d;'
+    else 
+        cat $VZN_CT_CONFDIR/$ctid.conf | sed '/^#/d; /^$/d;' | grep -e "^$key" | awk 'BEGIN{FS="=";}{gsub(/"/, "", $2);print($2);}'
+    fi
+}
+
+function vznope-start () {
+    ctid=$1
+    if [ -z "$ctid" ] ; then
+        vznope-start-help
+    fi
+    ipaddr=$(vznope-getinfo $ctid IP_ADDRESS)
+    vzctl start $ctid && 
+        echo "ping check to $ipaddr" &&
+        ping -w 60 -c 1 $ipaddr > /dev/null 2>&1 &&
+        echo "network ok" &&
+        vznfile-append $ctid start &&
+        vznfile-commit $ctid 'start'
+}
+
+function vznope-stop () {
+    ctid=$1
+    if [ -z "$ctid" ] ; then
+        vznope-stop-help
+    fi
+    vzctl stop $ctid
+        vznfile-append $ctid stop &&
+        vznfile-commit $ctid 'stop'
+}
