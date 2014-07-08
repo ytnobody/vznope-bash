@@ -57,7 +57,7 @@ function metadir () {
     fi
 }
 
-function vznfile-commit-history () {
+function vznope-commit-history () {
     ctid=$1 ; shift
     step=$1 ; shift
     metadir=$(metadir $ctid)

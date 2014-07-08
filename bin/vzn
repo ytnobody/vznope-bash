@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export VZNBIN=$(dirname $0)
+export VZN=$VZNBIN/vzn
 export VZNLIB=$VZNBIN/../lib
 
 . $VZNLIB/vznope.sh
