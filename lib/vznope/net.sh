@@ -1,5 +1,6 @@
 function vznet-init () {
-    ifconfig $VZN_NETIF $VZN_CT_GATEWAY/$VZN_CT_NETMASK
+    ip addr show $VZN_NETIF | grep "$VZN_CT_GATEWAY/$VZN_CT_NETMASK" > /dev/null 2>&1 ||
+    ip addr add $VZN_CT_GATEWAY/$VZN_CT_NETMASK dev $VZN_NETIF
     vznet-create-chain vzn
     vznet-create-chain vzn-nat -t nat
     vznet-chain-rule vzn-nat -t nat -s $VZN_CT_NETWORK -j MASQUERADE
