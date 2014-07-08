@@ -1,0 +1,26 @@
+### create
+create centos@6 --arch x86
+
+### allocate resources to container
+set --physpages 1G 
+set --swappages 2G
+set --diskspace 9G:10G
+set --cpuunits 8000
+
+### define resolver
+set --nameserver 8.8.8.8 
+
+### bootup when host machine wakes up
+set --onboot yes
+
+### boot
+start
+
+### update yum
+exec yum -y update
+
+### install and start mysql-server
+exec yum -y install mysql-server
+exec chkconfig mysqld on
+exec service mysqld start
+
