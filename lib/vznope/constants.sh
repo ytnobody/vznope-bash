@@ -18,6 +18,10 @@ if [ -z "$VZN_CT_PRIVDIR" ] ; then
     export VZN_CT_PRIVDIR=$VZN_VZDIR/private
 fi
 
+if [ -z "$VZN_CT_ROOTDIR" ] ; then
+    export VZN_CT_ROOTDIR=$VZN_VZDIR/root
+fi
+
 if [ -z "$VZN_CT_CONFDIR" ] ; then
     export VZN_CT_CONFDIR=/etc/vz/conf
 fi

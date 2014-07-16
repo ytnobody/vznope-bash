@@ -14,6 +14,7 @@ cat <<EOF
     help
     images-available
     list
+    put
     set
     start
     stop
@@ -118,6 +119,22 @@ cat <<EOF
 
   usage:
     vzn exec-as [CTID or NAME] [USER] [COMMAND AND OPTIONS]
+EOF
+exit
+}
+
+function vznope-put-help () {
+cat <<EOF
+
+  # vzn put
+
+  Copy source file to destination host's path
+
+  usage:
+    vzn put [CTID or NAME] [SOURCE FILE] [DESTINATION PATH]
+
+  !!! NOTICE !!!
+    DESTINATION PATH must be ABSOLUTE PATH
 EOF
 exit
 }

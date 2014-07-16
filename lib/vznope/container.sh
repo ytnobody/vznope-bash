@@ -150,3 +150,14 @@ function vznope-set () {
     vzctl set $ctid $* --save &&
         vznfile-put $ctid "set $*"
 }
+
+function vznope-put () {
+    ctid=$(vzutil-get-ctid $1) ; shift
+    src=$1 ; shift
+    dst=$1
+    if [ -z "$ctid" ] || [ -z "$src" ] || [ -z "$dst" ] ; then
+        vznope-put-help
+    fi
+    cp $src $VZN_CT_ROOTDIR/$ctid$dst &&
+        vznfile-put $ctid "put $src $dst"
+}
