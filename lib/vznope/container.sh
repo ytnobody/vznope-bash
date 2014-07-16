@@ -138,7 +138,7 @@ function vznope-exec-as () {
     if [ -z "$ctid" ] || [ -z "$username" ] || [ -z "$*" ] ; then
         vznope-exec-as-help
     fi
-    vzctl exec $ctid su - $username -c "$*" && 
+    vzctl exec $ctid "su - $username -c '$*'" && 
         vznfile-put $ctid "exec-as $username $*"
 }
 

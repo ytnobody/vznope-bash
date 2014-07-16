@@ -30,5 +30,6 @@ function vznope-build () {
 function vznope-run () {
     ctid=$1 ; shift
     subcmd=$1 ; shift
+    echo -e "\033[35m  ==> vznope-$subcmd $ctid $*\033[0m"
     eval "vznope-$subcmd" $ctid $*
 }
