@@ -139,7 +139,7 @@ function vznope-exec-as () {
         vznope-exec-as-help
     fi
     vzctl exec $ctid "su - $username -c '$*'" && 
-        vznfile-put $ctid "exec-as $username $*"
+        vznfile-put $ctid "exec-as $username '$*'"
 }
 
 function vznope-set () {
