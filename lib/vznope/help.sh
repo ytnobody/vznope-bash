@@ -105,7 +105,12 @@ cat <<EOF
   Exec command in specified container. Then append as history into vznfile.
 
   usage:
-    vzn exec [CTID or NAME] [COMMAND AND OPTIONS]
+    vzn exec [CTID or NAME] [OPTIONS] -- [COMMANDS]
+
+  options:
+    --dir  : Exec COMMANDS in specified directory.
+    --user : Exec COMMANDS as specified user.
+
 EOF
 exit
 }

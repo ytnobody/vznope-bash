@@ -125,9 +125,24 @@ function vznope-enter () {
 
 function vznope-exec () {
     ctid=$(vzutil-get-ctid $1) ; shift
+    getopt $*
+    user=$OPT_user
+    dir=$OPT_dir
+    cmd=$OPT_CMD
     if [ -z "$ctid" ] || [ -z "$*" ] ; then
         vznope-exec-help
     fi
+    if [ ! -z "$dir" ] ; then
+        cmd="cd $dir && $cmd"
+    fi
+    if [ ! -z "$user" ] ; then
+        cmd="su - $user -c '$cmd'"
+    fi
+    if [ -z "$cmd" ] ; then
+        cmd=$*
+    fi
+    echo "[EXEC]--> $cmd"
+
     vzctl exec $ctid $* && 
         vznfile-put $ctid "exec $*"
 }

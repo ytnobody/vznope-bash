@@ -114,21 +114,21 @@ Try to install mysql-server with 'vzn exec' command.
 
 First, we want to run 'yum -y update'.
 
-    $ vzn exec my_ct yum -y update
+    $ vzn exec my_ct -- yum -y update
 
 Then, wait a few time.
 
 Next, try 'yum -y install nginx' through 'vzn exec' command.
 
-    $ vzn exec my_ct yum -y install mysql-server
+    $ vzn exec my_ct -- yum -y install mysql-server
 
 And, we want to boot-up mysqld.
 
-    $ vzn exec my_ct service mysqld start
+    $ vzn exec my_ct -- service mysqld start
 
 On boot up time, too.
 
-    $ vzn exec my_ct chkconfig mysqld on
+    $ vzn exec my_ct -- chkconfig mysqld on
 
 Okay! We make some changes for installing mysq-server.
 
@@ -143,10 +143,10 @@ Then, it shows following.
     create centos --name my_ct
     set --nameserver 8.8.8.8
     start
-    exec yum -y update
-    exec yum -y install mysql-server
-    exec service mysqld start
-    exec chkconfig mysqld on
+    exec -- yum -y update
+    exec -- yum -y install mysql-server
+    exec -- service mysqld start
+    exec -- chkconfig mysqld on
 
 This text that named 'vznfile' is useful for creating an another container with duplicated setting.
 
