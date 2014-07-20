@@ -4,6 +4,8 @@ function vznet-init () {
     vznet-create-chain vzn
     iptables -S vzn-nat -t nat | grep $VZN_CT_NETWORK > /dev/null 2>&1 ||
         vznet-chain-rule vzn-nat -t nat -s $VZN_CT_NETWORK -j MASQUERADE
+    iptables -S POSTROUTING -t nat | grep vzn-nat > /dev/null 2>&1 ||
+        vznet-chain-rule POSTROUTING -t nat -s $VZN_CT_NETWORK -j vzn-nat
 }
 
 function vznet-create-chain () {
