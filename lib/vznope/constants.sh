@@ -39,7 +39,7 @@ if [ -z "$VZN_CT_NETWORK" ] ; then
 fi
 
 if [ -z "$VZN_CT_GATEWAY" ] ; then
-    export VZN_CT_GATEWAY=169.254.32.1
+    export VZN_CT_GATEWAY=169.254.0.1
 fi
 
 if [ -z "$VZN_CT_NAMESERVER" ] ; then
