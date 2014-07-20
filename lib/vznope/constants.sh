@@ -35,7 +35,7 @@ if [ -z "$VZN_CT_NETMASK" ] ; then
 fi
 
 if [ -z "$VZN_CT_NETWORK" ] ; then
-    export VZN_CT_NETWORK=169.254.32.0/$VZN_CT_NETMASK
+    export VZN_CT_NETWORK=169.254.0.0/$VZN_CT_NETMASK
 fi
 
 if [ -z "$VZN_CT_GATEWAY" ] ; then
@@ -47,7 +47,7 @@ if [ -z "$VZN_CT_NAMESERVER" ] ; then
 fi
 
 if [ -z "$VZN_NETIF" ] ; then
-    export VZN_NETIF=eth0:vzn
+    export VZN_NETIF=eth0
 fi
 
 if [ -z "$VZN_WORDS_DICT" ] ; then
