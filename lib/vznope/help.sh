@@ -10,7 +10,6 @@ cat <<EOF
     destroy
     enter
     exec
-    exec-as
     help
     images-available
     list
@@ -111,19 +110,6 @@ cat <<EOF
     --dir  : Exec COMMANDS in specified directory.
     --user : Exec COMMANDS as specified user.
 
-EOF
-exit
-}
-
-function vznope-exec-as-help () {
-cat <<EOF
-
-  # vzn exec-as
-
-  Exec command as specified user in specified container. Then append as history into vznfile.
-
-  usage:
-    vzn exec-as [CTID or NAME] [USER] [COMMAND AND OPTIONS]
 EOF
 exit
 }
