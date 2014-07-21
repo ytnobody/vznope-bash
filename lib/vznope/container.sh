@@ -143,7 +143,7 @@ function vznope-exec () {
     fi
     echo "[EXEC]--> $cmd"
 
-    vzctl exec $ctid $* && 
+    vzctl exec $ctid "($cmd)" && 
         vznfile-put $ctid "exec $*"
 }
 
