@@ -18,6 +18,9 @@ cat <<EOF
     start
     stop
     vznfile
+    napt-add
+    napt-delete
+    napt-list
 
 EOF
 exit
@@ -180,6 +183,35 @@ cat <<EOF
 EOF
 exit
 }
+
+function vznope-napt-add-help () {
+cat <<EOF
+  # vzn napt-add
+  
+  Add a rule for transporting packets to container
+
+  usage:
+    vzn napt-add [CTID or NAME] [Source Port] ([Destination Port])
+
+
+EOF
+exit
+}
+
+function vznope-napt-delete-help () {
+cat <<EOF
+  # vzn napt-delete
+  
+  Delete a rule for transporting packets to container
+
+  usage:
+    vzn napt-delete [CTID or NAME] [Source Port]
+
+
+EOF
+exit
+}
+
 
 function vznope-vznfile-help () {
 cat <<EOF
