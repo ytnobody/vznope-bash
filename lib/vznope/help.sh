@@ -228,4 +228,19 @@ EOF
 exit
 }
 
+function vznope-pack-help () {
+cat <<EOF
+
+  # vzn pack
+
+  Pack specified container
+
+  usage:
+    vzn pack [CTID or NAME]
+
+
+EOF
+exit
+}
+
 

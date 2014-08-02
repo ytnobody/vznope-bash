@@ -53,3 +53,7 @@ fi
 if [ -z "$VZN_WORDS_DICT" ] ; then
     export VZN_WORDS_DICT=/usr/share/dict/words
 fi
+
+if [ -z "$VZN_PACK_DIR" ] ; then
+    export VZN_PACK_DIR=$VZN_WORKDIR/pack
+fi
