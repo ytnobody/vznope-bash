@@ -38,21 +38,35 @@ function vznope-napt-add () {
     fi
     ctip=$(vznope-getinfo $ctid IP_ADDRESS)
     iptables -S vzn-napt -t nat | grep $ctip | grep "dport $src" > /dev/null 2>&1 ||
-        vznet-chain-rule vzn-napt -t nat -p tcp --dport $src -j DNAT --to $ctip:$dst
+        vznet-chain-rule vzn-napt -t nat -p tcp --dport $src -j DNAT --to $ctip:$dst &&
+        vznfile-put $ctid "napt-add $src $dst"
 }
 
 function vznope-napt-delete () {
     ctid=$(vzutil-get-ctid $1) ; shift
     src=$1; shift
-    if [ -z "$ctid" ] || [ -z "$src" ] ; then
+    if [ -z "$ctid" ] ; then
         vznope-napt-delete-help
     fi
-    dst=$1
-    if [ -z "$dst" ] ; then
-        dst=$src
-    fi
+
     ctip=$(vznope-getinfo $ctid IP_ADDRESS)
-    iptables -t nat -D vzn-napt -p tcp --dport $src -j DNAT --to $ctip:$dst
+
+    if [ ! -z "$src" ]; then
+        dst=$1
+        if [ -z "$dst" ] ; then
+            dst=$src
+        fi
+        iptables -t nat -D vzn-napt -p tcp --dport $src -j DNAT --to $ctip:$dst &&
+            vznfile-put $ctid "napt-delete $src $dst"
+    else
+        iptables -t nat -S vzn-napt | grep $ctip | awk '
+           { 
+               sub("-A","-D");
+               print("iptables -t nat",$0);
+           }
+        ' | bash &&
+           vznfile-put $ctid "napt-delete"
+    fi
 }
 
 function vznope-napt-list () {

@@ -42,6 +42,7 @@ function vznope-destroy () {
     fi
 
     metadir=$(metadir $ctid)
+    vznope-napt-delete $ctid &&
     vznope-stop $ctid &&
     vzctl destroy $ctid &&
       rm -fr $metadir

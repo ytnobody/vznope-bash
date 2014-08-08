@@ -11,3 +11,5 @@ exec apt-get remove -y --force-yes apache2
 exec apt-get install -y --force-yes nginx
 exec service nginx start
 
+### napt setting
+napt-add 7000 80
