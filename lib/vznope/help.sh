@@ -23,6 +23,7 @@ cat <<EOF
     napt-list
     pack
     unpack
+    snapshot
 EOF
 exit
 }
@@ -253,6 +254,20 @@ cat <<EOF
 
   usage:
     vzn unpack [CT-Package.tar.gz path] [Destination CTID]
+EOF
+exit
+}
+
+function vznope-snapshot-help () {
+cat <<EOF
+
+  # vzn snapshot
+
+  Manupulate snapshot
+
+  usage:
+    vzn snapshot (add|list|switch|delete|mount|umount) [CTID] [some options...]
+
 EOF
 exit
 }

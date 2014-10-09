@@ -8,6 +8,7 @@
 . $VZNLIB/vznope/net.sh
 . $VZNLIB/vznope/builder.sh
 . $VZNLIB/vznope/vznpack.sh
+. $VZNLIB/vznope/snapshot.sh
 
 function vznope-init () {
     vznet-init
