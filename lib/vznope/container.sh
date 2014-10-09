@@ -28,7 +28,7 @@ function vznope-create () {
         arch=$(uname -i)
     fi
 
-    vzctl create $ctid --ostemplate $image --name $name --hostname $name --ipadd $ip &&
+    vzctl create $ctid --ostemplate $image --name $name --hostname $name --ipadd $ip --layout ploop &&
         vznfile-init $ctid &&
         vznfile-append $ctid create $distver --arch $arch &&
         vznfile-commit $ctid 'create'
