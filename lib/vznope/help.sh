@@ -21,7 +21,8 @@ cat <<EOF
     napt-add
     napt-delete
     napt-list
-
+    pack
+    unpack
 EOF
 exit
 }
@@ -243,4 +244,16 @@ EOF
 exit
 }
 
+function vznope-unpack-help () {
+cat <<EOF
+
+  # vzn unpack
+
+  Unpack a CT-Package and import as a container
+
+  usage:
+    vzn unpack [CT-Package.tar.gz path] [Destination CTID]
+EOF
+exit
+}
 

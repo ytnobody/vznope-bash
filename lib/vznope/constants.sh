@@ -57,3 +57,9 @@ fi
 if [ -z "$VZN_PACK_DIR" ] ; then
     export VZN_PACK_DIR=$VZN_WORKDIR/pack
 fi
+
+### resolve original user
+[[ $(id $(who | grep $(ps $(echo $$) | awk 'NR==2{print($2)}') | awk '{print($1)}') | awk '{print($1, $2)}' ) =~ ^uid=[0-9]+\((.+)\).+gid=[0-9]+\((.+)\) ]]
+export VZN_ORIG_USER=${BASH_REMATCH[1]}
+export VZN_ORIG_GROUP=${BASH_REMATCH[2]}
+
