@@ -12,6 +12,9 @@ function vznfile-init () {
     fi
     cd $metadir
     git init .
+    echo '[user]' >> .git/config
+    echo "  name = $VZN_GIT_USER" >> .git/config
+    echo "  email = $VZN_GIT_EMAIL" >> .git/config
 }
 
 function vznfile-commit () {
@@ -19,7 +22,7 @@ function vznfile-commit () {
     metadir=$(metadir $ctid)
     cd $metadir
     git add vznfile
-    git commit -m "$*"
+    git commit --author "$VZN_GIT_USER <$VZN_GIT_EMAIL>" -m "$*"
 }
 
 function vznfile-put {
