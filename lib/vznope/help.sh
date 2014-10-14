@@ -272,3 +272,17 @@ EOF
 exit
 }
 
+function vznope-revert-help () {
+cat <<EOF
+
+  # vzn revert
+
+  Revert to previous status.
+
+  usage:
+    vzn revert [CTID]
+
+EOF
+exit
+}
+

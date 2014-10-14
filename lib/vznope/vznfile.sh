@@ -45,6 +45,13 @@ function vznope-vznfile () {
     cat $(vznfile $ctid)
 }
 
+function vznfile-revert () {
+    ctid=$1 ; shift
+    metadir=$(metadir $ctid)
+    cd $metadir
+    git revert HEAD
+}
+
 function metadir () {
     ctid=$1 ; shift
     if [ -d $VZN_CT_METADIR/$ctid ] ; then

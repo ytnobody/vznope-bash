@@ -29,6 +29,7 @@ function vznope-create () {
     fi
 
     vzctl create $ctid --ostemplate $image --name $name --hostname $name --ipadd $ip --layout ploop &&
+        vznope-snapshot add $ctid &&
         vznfile-init $ctid &&
         vznfile-append $ctid create $distver --arch $arch &&
         vznfile-commit $ctid 'create'
@@ -145,6 +146,7 @@ function vznope-exec () {
     echo "[EXEC]--> $cmd"
 
     vzctl exec $ctid "($cmd)" && 
+        vznope-snapshot add $ctid &&
         vznfile-put $ctid "exec $*"
 }
 
@@ -166,4 +168,13 @@ function vznope-put () {
     fi
     cp $src $VZN_CT_ROOTDIR/$ctid$dst &&
         vznfile-put $ctid "put $src $dst"
+}
+
+function vznope-revert () {
+    ctid=$(vzutil-get-ctid $1) ; shift
+    if [ -z "$ctid" ] ; then
+        vznope-revert-help
+    fi
+    vznope-revert-snapshot $ctid &&
+        vznfile-revert $ctid
 }
