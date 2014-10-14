@@ -165,6 +165,13 @@ You can create another container with duplicated setting with vznfile and 'vzn b
     $ vzn vznfile my_ct > my_ct.vznfile
     $ vzn build 102 --name my_ct_2 < my_ct.vznfile
 
+## 7th. HOW TO REVERT WHEN MISTAKEN
+
+You can revert a previous action by 'vzn revert' command.
+
+    $ vzn exec 102 rm -rf /* ### OMG!!!!
+    $ vzn revert 102         ### REVERT!!!
+
 # LICENSE
 
 Copyright (C) ytnobody.
